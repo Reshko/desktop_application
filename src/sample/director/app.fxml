@@ -4,7 +4,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.director.Controller">
     <children>
-        <AnchorPane prefHeight="106.0" prefWidth="648.0" style="-fx-background-color: #f75959;" />
+        <AnchorPane prefHeight="106.0" prefWidth="648.0" style="-fx-background-color: #f75959;">
+         <children>
+            <Button fx:id="update" layoutX="582.0" layoutY="14.0" mnemonicParsing="false" text="\@" />
+         </children></AnchorPane>
         <!-- Таблица в которую мы будем выводит наш pojo -->
         <TableView fx:id="tableUsers" layoutY="106.0" prefHeight="330.0" prefWidth="496.0">
             <columns>

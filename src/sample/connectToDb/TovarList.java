@@ -15,6 +15,8 @@ public class TovarList {
         this.numberTovar = numberTovar;
     }
 
+    public TovarList() {}
+
     public int getIdTovar() {
         return idTovar;
     }

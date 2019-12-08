@@ -1,8 +1,5 @@
-package sample.meneger.deleteWindow;
+package sample.klad.addWindow;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +11,13 @@ import javafx.stage.Stage;
 import sample.connectToDb.DatabaseHandler;
 import sample.connectToDb.TovarList;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class Controller {
+
+
 
     @FXML
     private ResourceBundle resources;
@@ -29,31 +32,56 @@ public class Controller {
     private Button exist;
 
     @FXML
-    private Button deleteReq;
+    private Button addReq;
 
     @FXML
-    private TextField deleteField;
+    private TextField idName;
+
+    @FXML
+    private TextField idWidth;
+
+    @FXML
+    private TextField idLong;
+
+    @FXML
+    private TextField idNumber;
 
     @FXML
     void initialize() {
-        deleteReq.setOnAction(event -> {
-            if(!deleteField.getText().trim().equals("")){
-                delValue();
-                deleteReq.getScene().getWindow().hide();
-            }
-            else error();
-        });
         exist.setOnAction(event -> {
             exist.getScene().getWindow().hide();
         });
+        addReq.setOnAction(event -> {
+            if(!idName.getText().trim().equals("") && !idWidth.getText().trim().equals("") && !idLong.getText().trim().equals("") && !idNumber.getText().trim().equals("")){
+                upNewTovar();
+                addReq.getScene().getWindow().hide();
+            }else {
+                error();
+            }
+        });
+
     }
 
-    private void delValue(){
+
+
+    private void upNewTovar() {
         DatabaseHandler dbHandler = new DatabaseHandler();
-        int idDel = Integer.parseInt(deleteField.getText().trim());
-        TovarList tovar = new TovarList(idDel,"",1,1,1);
-        dbHandler.reqDeleteTovar(tovar);
+
+        String name = idName.getText();
+        String  width = idWidth.getText();
+        String longer = idLong.getText();
+        String number = idNumber.getText();
+
+        int w = Integer.parseInt(width);
+        int l = Integer.parseInt(longer);
+        int n = Integer.parseInt(number);
+
+        //User user = new User(type,login,password);
+        TovarList tovar = new TovarList(1,name,w,l,n);
+
+        dbHandler.reqAddNewTovar(tovar);
     }
+
     void error(){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/sample/error/app.fxml"));

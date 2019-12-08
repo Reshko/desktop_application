@@ -22,7 +22,12 @@ import java.util.ResourceBundle;
 
 public class Controller {
 
+
+
     private ObservableList<Tovar> tovarData = FXCollections.observableArrayList();
+
+    @FXML
+    private Button update;
 
     @FXML
     private ResourceBundle resources;
@@ -74,45 +79,112 @@ public class Controller {
 
         tableUsers.setItems(tovarData);
 
-
+        update.setOnAction(event -> {
+            update.getScene().getWindow().hide();
+            update();
+        });
         exitBtn.setOnAction(event -> {
             exitBtn.getScene().getWindow().hide();
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../sample.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent parent = loader.getRoot();
-            Stage stage =  new Stage();
-            stage.setTitle("Окно авторизации");
-            stage.setScene(new Scene(parent));
-            stage.show();
+            exist();
         });
-
+        addBtn.setOnAction(event -> {
+            add();
+        });
+        deleteBtn.setOnAction(event -> {
+            delete();
+        });
+        changeBtn.setOnAction(event -> {
+            change();
+        });
     }
+
     public void showTable(){
-
         DatabaseHandler dbHandler = new DatabaseHandler();
-
-        String query = "select * from tovar";
+        String query = "select * from tovar2";
         try {
             Statement statement = dbHandler.getDbConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()){
-                tovarData.add(new Tovar(resultSet.getInt("idtovar"),resultSet.getString("name"),resultSet.getInt("width"),resultSet.getInt("long"),resultSet.getInt("number")));
+                tovarData.add(new Tovar(resultSet.getInt("idtovar2"),resultSet.getString("nameTovar"),resultSet.getInt("widthTovar"),resultSet.getInt("longTovar"),resultSet.getInt("numberTovar")));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    void update(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/meneger/app.fxml"));
 
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent parent = loader.getRoot();
+        Stage stage =  new Stage();
+        stage.setTitle("Окно менеджера");
+        stage.setScene(new Scene(parent));
+        stage.show();
+        showTable();
+    }
+    void exist(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../sample.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent parent = loader.getRoot();
+        Stage stage =  new Stage();
+        stage.setTitle("Окно авторизации");
+        stage.setScene(new Scene(parent));
+        stage.show();
+    }
+    void add(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/meneger/addWindow/app.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent parent = loader.getRoot();
+        Stage stage =  new Stage();
+        stage.setTitle("Запрос на добавление данных");
+        stage.setScene(new Scene(parent));
+        stage.showAndWait();
+    }
+    void delete(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/meneger/deleteWindow/app.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent parent = loader.getRoot();
+        Stage stage =  new Stage();
+        stage.setTitle("Запрос на добавление данных");
+        stage.setScene(new Scene(parent));
+        stage.showAndWait();
+    }
+    void change(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/meneger/changeWindow/app.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent parent = loader.getRoot();
+        Stage stage =  new Stage();
+        stage.setTitle("Запрос на добавление данных");
+        stage.setScene(new Scene(parent));
+        stage.showAndWait();
     }
 }

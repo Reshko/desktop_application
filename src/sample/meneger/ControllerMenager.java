@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
-public class Controller {
+public class ControllerMenager {
 
 
 
@@ -69,7 +69,7 @@ public class Controller {
 
 
     @FXML
-    void initialize() {
+    public void initialize() {
 
         showTable();
 
@@ -133,7 +133,7 @@ public class Controller {
         stage.show();
         showTable();
     }
-    void exist(){
+    public void exist(){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("../sample.fxml"));
         try {
@@ -161,7 +161,7 @@ public class Controller {
         stage.setScene(new Scene(parent));
         stage.showAndWait();
     }
-    void delete(){
+    public void delete(){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/sample/meneger/deleteWindow/app.fxml"));
         try {
@@ -175,7 +175,7 @@ public class Controller {
         stage.setScene(new Scene(parent));
         stage.showAndWait();
     }
-    void change(){
+    public void change(){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/sample/meneger/changeWindow/app.fxml"));
         try {

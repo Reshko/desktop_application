@@ -1,8 +1,5 @@
-package sample.meneger.deleteWindow;
+package sample.zakaz.basketTovar.deleteZakaz;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +10,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.connectToDb.DatabaseHandler;
 import sample.connectToDb.TovarList;
+import sample.zakaz.Tovar;
+import sample.zakaz.basketTovar.ZakazTable;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class Controller {
 
@@ -51,8 +54,8 @@ public class Controller {
     private void delValue(){
         DatabaseHandler dbHandler = new DatabaseHandler();
         int idDel = Integer.parseInt(deleteField.getText().trim());
-        TovarList tovar = new TovarList(idDel,"",1,1,1);
-        dbHandler.reqDeleteTovar(tovar);
+        ZakazTable zkTable = new ZakazTable(idDel,"",0);
+        dbHandler.reqDeleteZakazInBasket(zkTable);
     }
     void error(){
         FXMLLoader loader = new FXMLLoader();

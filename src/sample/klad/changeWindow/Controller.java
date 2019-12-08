@@ -1,9 +1,4 @@
-package sample.meneger.changeWindow;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Handler;
+package sample.klad.changeWindow;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.connectToDb.DatabaseHandler;
 import sample.connectToDb.TovarList;
-import sample.meneger.ControllerMenager;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class Controller {
 

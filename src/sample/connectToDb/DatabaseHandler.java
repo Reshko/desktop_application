@@ -2,6 +2,7 @@ package sample.connectToDb;
 
 import sample.connectToDb.Configs;
 import sample.connectToDb.Const;
+import sample.zakaz.basketTovar.ZakazTable;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,6 +22,34 @@ public class DatabaseHandler extends Configs {
         dbConnection = DriverManager.getConnection(connectionString,dbUser,dbPassword);
 
         return dbConnection;
+    }
+
+    public void reqAddNewZakaz(TovarList tovarList){
+        try {
+            String insert = "INSERT INTO zakaz (nameZakaz,numberZakaz) VALUES (?, ?)";
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1,tovarList.getNameTovar());
+            prSt.setInt(2,tovarList.getNumberTovar());
+            prSt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reqDeleteZakazInBasket(ZakazTable zakaz){
+        try {
+            String delete = "DELETE FROM zakaz WHERE idZakaz =?";
+            PreparedStatement prSt = getDbConnection().prepareStatement(delete);
+            prSt.setInt(1,zakaz.getIdTable());
+            prSt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+
     }
 
     public void reqAddNewTovar(TovarList tovarList){
@@ -52,6 +81,8 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
     }
+
+
 
     public void reqChangeTovar(TovarList tovarList){
         try {
@@ -125,4 +156,59 @@ public class DatabaseHandler extends Configs {
 
         return resSet;
     }
+    public ResultSet checkZakazCount(TovarList tovar){
+        ResultSet resultSet = null;
+
+        String select = "SELECT * FROM tovar2 WHERE nameTovar =?";
+
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1,tovar.getNameTovar());
+            resultSet = prSt.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
+    public void changeCountWhenNewZakaz(TovarList tovarList){
+        try {
+            String update = "UPDATE tovar2 SET numberTovar =? WHERE idtovar2 =?";
+            PreparedStatement prSt = getDbConnection().prepareStatement(update);
+            prSt.setInt(1,tovarList.getNumberTovar());
+            prSt.setInt(2,tovarList.getIdTovar());
+            prSt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+    public ResultSet checkZakaz(TovarList tovar){
+        ResultSet resultSet = null;
+
+        String select = "SELECT * FROM tovar2 WHERE nameTovar =?";
+
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1,tovar.getNameTovar());
+            resultSet = prSt.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
+
 }

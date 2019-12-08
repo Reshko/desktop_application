@@ -24,6 +24,8 @@ public class Controller {
 
     private ObservableList<Tovar> tovarData = FXCollections.observableArrayList();
 
+    private ObservableList<Textile> textileData = FXCollections.observableArrayList();
+
     @FXML
     private ResourceBundle resources;
 
@@ -60,19 +62,50 @@ public class Controller {
     @FXML
     private Button addBtn;
 
+    @FXML
+    private TableView<Textile> tableUsers1;
+
+    @FXML
+    private TableColumn<Textile, Integer> idColumn2;
+
+    @FXML
+    private TableColumn<Textile, String> typeColumn;
+
+    @FXML
+    private TableColumn<Textile, String> countryColumn;
+
+    @FXML
+    private TableColumn<Textile, String> colorColumn;
+
+    @FXML
+    private TableColumn<Textile, Integer> longColumn2;
+
+    @FXML
+    private TableColumn<Textile, Integer> widthColumn2;
+
 
     @FXML
     void initialize() {
 
         showTable();
-
         idColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Tovar,String>("name"));
         widthColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("width"));
         longColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("longer"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("number"));
-
         tableUsers.setItems(tovarData);
+
+
+        showTable2();
+        idColumn2.setCellValueFactory(new PropertyValueFactory<Textile,Integer>("id"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<Textile,String>("type"));
+        countryColumn.setCellValueFactory(new PropertyValueFactory<Textile,String>("country"));
+        colorColumn.setCellValueFactory(new PropertyValueFactory<Textile,String>("color"));
+        longColumn2.setCellValueFactory(new PropertyValueFactory<Textile,Integer>("longer"));
+        widthColumn2.setCellValueFactory(new PropertyValueFactory<Textile,Integer>("width"));
+        tableUsers1.setItems(textileData);
+
+
 
 
         exitBtn.setOnAction(event -> {
@@ -94,6 +127,21 @@ public class Controller {
             stage.show();
         });
 
+        addBtn.setOnAction(event -> {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/klad/addWindow/app.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Parent parent = loader.getRoot();
+            Stage stage =  new Stage();
+            stage.setTitle("Запрос на добавление данных");
+            stage.setScene(new Scene(parent));
+            stage.showAndWait();
+        });
+
     }
     public void showTable(){
 
@@ -106,6 +154,27 @@ public class Controller {
 
             while (resultSet.next()){
                 tovarData.add(new Tovar(resultSet.getInt("idtovar"),resultSet.getString("name"),resultSet.getInt("width"),resultSet.getInt("long"),resultSet.getInt("number")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showTable2(){
+
+        DatabaseHandler dbHandler = new DatabaseHandler();
+
+        String query = "select * from textile";
+        try {
+            Statement statement = dbHandler.getDbConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()){
+                textileData.add(new Textile(resultSet.getInt("idtextile"),resultSet.getString("typeTextile"),resultSet.getString("countryTextile"),resultSet.getString("colorTextile"),resultSet.getInt("longTextile"),resultSet.getInt("widtTextile")));
             }
 
         } catch (SQLException e) {

@@ -28,6 +28,9 @@ public class Controller {
     private ResourceBundle resources;
 
     @FXML
+    private Button update;
+
+    @FXML
     private URL location;
 
     @FXML
@@ -52,13 +55,10 @@ public class Controller {
     private Button exitBtn;
 
     @FXML
-    private Button deleteBtn;
+    private Button lookAll;
 
     @FXML
-    private Button changeBtn;
-
-    @FXML
-    private Button addBtn;
+    private Button paidTovar;
 
 
     @FXML
@@ -73,6 +73,47 @@ public class Controller {
         numberColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("number"));
 
         tableUsers.setItems(tovarData);
+
+        lookAll.setOnAction(event -> {
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/zakaz/basketTovar/app.fxml"));
+
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent parent = loader.getRoot();
+            Stage stage =  new Stage();
+            stage.setTitle("Корзина");
+            stage.setScene(new Scene(parent));
+            stage.show();
+        });
+
+        update.setOnAction(event -> {
+            update.getScene().getWindow().hide();
+            update();
+        });
+
+        paidTovar.setOnAction(event -> {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/zakaz/newZakaz/app.fxml"));
+
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent parent = loader.getRoot();
+            Stage stage =  new Stage();
+            stage.setTitle("Купить товар");
+            stage.setScene(new Scene(parent));
+            stage.show();
+
+        });
 
 
         exitBtn.setOnAction(event -> {
@@ -96,16 +137,15 @@ public class Controller {
 
     }
     public void showTable(){
-
         DatabaseHandler dbHandler = new DatabaseHandler();
-
-        String query = "select * from tovar";
+        String query = "select * from tovar2";
         try {
             Statement statement = dbHandler.getDbConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()){
-                tovarData.add(new Tovar(resultSet.getInt("idtovar"),resultSet.getString("name"),resultSet.getInt("width"),resultSet.getInt("long"),resultSet.getInt("number")));
+                //tovarData.add(new Tovar(resultSet.getInt("idtovar"),resultSet.getString("name"),resultSet.getInt("width"),resultSet.getInt("long"),resultSet.getInt("number")));
+                tovarData.add(new Tovar(resultSet.getInt("idtovar2"),resultSet.getString("nameTovar"),resultSet.getInt("widthTovar"),resultSet.getInt("longTovar"),resultSet.getInt("numberTovar")));
             }
 
         } catch (SQLException e) {
@@ -113,6 +153,22 @@ public class Controller {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    void update(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/zakaz/app.fxml"));
 
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent parent = loader.getRoot();
+        Stage stage =  new Stage();
+        stage.setTitle("Окно менеджера");
+        stage.setScene(new Scene(parent));
+        stage.show();
+        showTable();
     }
 }
