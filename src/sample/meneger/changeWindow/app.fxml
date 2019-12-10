@@ -6,19 +6,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.meneger.changeWindow.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.meneger.changeWindow.Controller">
     <children>
       <Label fx:id="label_id" layoutX="64.0" layoutY="14.0" prefHeight="28.0" prefWidth="173.0" text="Заполните данные ">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-        <Button fx:id="exist" layoutX="177.0" layoutY="234.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Закрыть" />
+        <Button fx:id="exist" layoutX="172.0" layoutY="280.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Закрыть" />
       <TextField fx:id="idName" layoutX="54.0" layoutY="86.0" promptText="Наименование" />
       <TextField fx:id="idWidth" layoutX="54.0" layoutY="127.0" promptText="Ширина" />
       <TextField fx:id="idLong" layoutX="54.0" layoutY="166.0" promptText="Длина" />
       <TextField fx:id="idNumber" layoutX="54.0" layoutY="202.0" promptText="Количество" />
-      <Button fx:id="changeReq" layoutX="64.0" layoutY="234.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Изменить" />
+      <Button fx:id="changeReq" layoutX="59.0" layoutY="280.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" text="Изменить" />
       <TextField fx:id="idField" layoutX="54.0" layoutY="50.0" promptText="ID" />
+      <TextField fx:id="idPrice" layoutX="54.0" layoutY="241.0" promptText="Цена" />
     </children>
 </AnchorPane>

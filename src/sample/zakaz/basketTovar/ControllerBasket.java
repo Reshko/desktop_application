@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -50,19 +51,30 @@ public class ControllerBasket {
     private TableColumn<ZakazTable, Integer> numberColumn;
 
     @FXML
+    private TableColumn<ZakazTable, Integer> price;
+
+    @FXML
     private Button exitBtn;
 
     @FXML
     private Button deleteZakazInBasket;
 
     @FXML
+    private Label summ;
+
+
+
+    @FXML
     void initialize() {
+
+        returnSum();
 
         showTable();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<ZakazTable,Integer>("idTable"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<ZakazTable,String>("nameTable"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<ZakazTable,Integer>("numberTable"));
+        price.setCellValueFactory(new PropertyValueFactory<ZakazTable,Integer>("price"));
 
         tableUsers.setItems(basketData);
 
@@ -102,7 +114,7 @@ public class ControllerBasket {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()){
-                basketData.add(new ZakazTable(resultSet.getInt("idZakaz"),resultSet.getString("nameZakaz"),resultSet.getInt("numberZakaz")));
+                basketData.add(new ZakazTable(resultSet.getInt("idZakaz"),resultSet.getString("nameZakaz"),resultSet.getInt("numberZakaz"),resultSet.getInt("price")));
             }
 
         } catch (SQLException e) {
@@ -124,10 +136,40 @@ public class ControllerBasket {
 
         Parent parent = loader.getRoot();
         Stage stage =  new Stage();
-        stage.setTitle("Окно менеджера");
+        stage.setTitle("Корзина");
         stage.setScene(new Scene(parent));
         stage.show();
         showTable();
+    }
+
+    public void returnSum(){
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        String query = "select * from zakaz";
+
+
+        int count = 0;
+        int price = 0;
+        int itog = 0;
+        int summt = 0;
+        try {
+            Statement statement = dbHandler.getDbConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()){
+                count = resultSet.getInt("numberZakaz");
+                price = resultSet.getInt("price");
+                itog = price * count;
+                summt += itog;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        summ.setText(Integer.toString(summt));
+
     }
 
 }

@@ -52,6 +52,9 @@ public class Controller {
     private TableColumn<Tovar, Integer> numberColumn;
 
     @FXML
+    private TableColumn<Tovar, Integer> price;
+
+    @FXML
     private Button exitBtn;
 
     @FXML
@@ -59,6 +62,9 @@ public class Controller {
 
     @FXML
     private Button paidTovar;
+
+    @FXML
+    private Button kondtruct;
 
 
     @FXML
@@ -71,8 +77,27 @@ public class Controller {
         widthColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("width"));
         longColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("longer"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("number"));
+        price.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("price"));
 
         tableUsers.setItems(tovarData);
+
+        kondtruct.setOnAction(event -> {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/zakaz/constructor/app.fxml"));
+
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent parent = loader.getRoot();
+            Stage stage =  new Stage();
+            stage.setTitle("Конструктор");
+            stage.setScene(new Scene(parent));
+            stage.show();
+
+        });
 
         lookAll.setOnAction(event -> {
 
@@ -145,7 +170,7 @@ public class Controller {
 
             while (resultSet.next()){
                 //tovarData.add(new Tovar(resultSet.getInt("idtovar"),resultSet.getString("name"),resultSet.getInt("width"),resultSet.getInt("long"),resultSet.getInt("number")));
-                tovarData.add(new Tovar(resultSet.getInt("idtovar2"),resultSet.getString("nameTovar"),resultSet.getInt("widthTovar"),resultSet.getInt("longTovar"),resultSet.getInt("numberTovar")));
+                tovarData.add(new Tovar(resultSet.getInt("idtovar2"),resultSet.getString("nameTovar"),resultSet.getInt("widthTovar"),resultSet.getInt("longTovar"),resultSet.getInt("numberTovar"),resultSet.getInt("price")));
             }
 
         } catch (SQLException e) {
@@ -166,7 +191,7 @@ public class Controller {
 
         Parent parent = loader.getRoot();
         Stage stage =  new Stage();
-        stage.setTitle("Окно менеджера");
+        stage.setTitle("Окно заказчика");
         stage.setScene(new Scene(parent));
         stage.show();
         showTable();

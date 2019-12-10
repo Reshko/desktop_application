@@ -6,13 +6,23 @@ public class Tovar {
     private int width;
     private int longer;
     private int number;
+    private int price;
 
-    public Tovar(int id, String name, int width, int longer, int number) {
+    public Tovar(int id, String name, int width, int longer, int number,int price) {
         this.id = id;
         this.name = name;
         this.width = width;
         this.longer = longer;
         this.number = number;
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getId() {

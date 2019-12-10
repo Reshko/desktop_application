@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.connectToDb.DatabaseHandler;
 import sample.connectToDb.TovarList;
+import sample.klad.Textile;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,25 +37,44 @@ public class Controller {
     private TextField deleteField;
 
     @FXML
+    private TextField tableName;
+
+    @FXML
     void initialize() {
         deleteReq.setOnAction(event -> {
-            if(!deleteField.getText().trim().equals("")){
-                delValue();
-                deleteReq.getScene().getWindow().hide();
-            }
-            else error();
+            if(!deleteField.getText().trim().equals("") && !tableName.getText().trim().equals("")){
+                if(Integer.parseInt(deleteField.getText()) > 0){
+                    if(tableName.getText().equals("Ткани")){
+                        secondDel();
+                        deleteReq.getScene().getWindow().hide();
+                    } else if (tableName.getText().equals("Фурнитура")){
+                        firstDel();
+                        deleteReq.getScene().getWindow().hide();
+                    }
+                    else error();
+                } else error();
+            } else error();
         });
         exist.setOnAction(event -> {
             exist.getScene().getWindow().hide();
         });
     }
 
-    private void delValue(){
-        DatabaseHandler dbHandler = new DatabaseHandler();
-        int idDel = Integer.parseInt(deleteField.getText().trim());
-        TovarList tovar = new TovarList(idDel,"",1,1,1);
-        dbHandler.reqDeleteTovar(tovar);
+    public void firstDel(){
+        DatabaseHandler db = new DatabaseHandler();
+        int id = Integer.parseInt(deleteField.getText().trim());
+        TovarList tovar = new TovarList(id,"",1,1,1,1);
+        db.reqDeleteTovar(tovar);
+
     }
+
+    public void secondDel(){
+        DatabaseHandler db = new DatabaseHandler();
+        int id = Integer.parseInt(deleteField.getText().trim());
+        Textile textile = new Textile(id,"","","",1,1);
+        db.reqDeleteTextile(textile);
+    }
+
     void error(){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/sample/error/app.fxml"));

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -54,6 +55,9 @@ public class Controller {
     private TableColumn<Tovar, Integer> numberColumn;
 
     @FXML
+    private TableColumn<Tovar, Integer> priceColumn;
+
+    @FXML
     private Button exitBtn;
 
     @FXML
@@ -65,9 +69,17 @@ public class Controller {
     @FXML
     private Button addBtn;
 
+    @FXML
+    private Label summ;
+
+
+
 
     @FXML
     void initialize() {
+
+
+        returnSum();
 
         showTable();
 
@@ -76,6 +88,7 @@ public class Controller {
         widthColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("width"));
         longColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("longer"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("number"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("price"));
 
         tableUsers.setItems(tovarData);
 
@@ -106,7 +119,7 @@ public class Controller {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()){
-                tovarData.add(new Tovar(resultSet.getInt("idtovar2"),resultSet.getString("nameTovar"),resultSet.getInt("widthTovar"),resultSet.getInt("longTovar"),resultSet.getInt("numberTovar")));
+                tovarData.add(new Tovar(resultSet.getInt("idtovar2"),resultSet.getString("nameTovar"),resultSet.getInt("widthTovar"),resultSet.getInt("longTovar"),resultSet.getInt("numberTovar"),resultSet.getInt("price")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,7 +129,7 @@ public class Controller {
     }
     void update(){
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/meneger/app.fxml"));
+        loader.setLocation(getClass().getResource("/sample/director/app.fxml"));
 
         try {
             loader.load();
@@ -126,7 +139,7 @@ public class Controller {
 
         Parent parent = loader.getRoot();
         Stage stage =  new Stage();
-        stage.setTitle("Окно менеджера");
+        stage.setTitle("Окно директора");
         stage.setScene(new Scene(parent));
         stage.show();
         showTable();
@@ -187,4 +200,58 @@ public class Controller {
         stage.setScene(new Scene(parent));
         stage.showAndWait();
     }
+
+    /*public void returnSum(){
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        String query = "select sum(price) from tovar2";
+
+        String rub = "рублей";
+        try {
+            Statement statement = dbHandler.getDbConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()){
+                rub = resultSet.getString("sum(price)");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        summ.setText(rub + " рублей");
+
+    }*/
+
+    public void returnSum(){
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        String query = "select * from tovar2";
+
+
+        int count = 0;
+        int price = 0;
+        int itog = 0;
+        int summt = 0;
+        try {
+            Statement statement = dbHandler.getDbConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()){
+                count = resultSet.getInt("numberTovar");
+                price = resultSet.getInt("price");
+                itog = price * count;
+                summt += itog;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        summ.setText(Integer.toString(summt));
+
+    }
+
 }

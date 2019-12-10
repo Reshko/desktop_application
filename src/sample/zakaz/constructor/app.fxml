@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="211.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.zakaz.constructor.Controller">
+    <children>
+      <Label fx:id="label_id" layoutX="64.0" layoutY="14.0" prefHeight="28.0" prefWidth="173.0" text="Конструктор">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+        <Button fx:id="exist" layoutX="400.0" layoutY="170.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Закрыть" />
+      <Button fx:id="add" layoutX="57.0" layoutY="170.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Добавить" />
+      <TextField fx:id="width" layoutX="64.0" layoutY="54.0" prefHeight="26.0" prefWidth="129.0" promptText="Ширина изделия" />
+      <TextField fx:id="hight" layoutX="64.0" layoutY="92.0" prefHeight="26.0" prefWidth="130.0" promptText="Высота изделия" />
+      <TextField fx:id="variant" layoutX="64.0" layoutY="126.0" prefHeight="26.0" prefWidth="130.0" promptText="Вариант ткани" />
+      <TextField fx:id="okontovka" layoutX="274.0" layoutY="54.0" promptText="Вариант окантовки" />
+      <TextField fx:id="furnit" layoutX="274.0" layoutY="93.0" promptText="Вариант фурнитуры" />
+      <TextField fx:id="size" layoutX="274.0" layoutY="127.0" promptText="Размер фурнитуры" />
+      <Button fx:id="look" layoutX="167.0" layoutY="170.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Посмотреть" />
+    </children>
+</AnchorPane>

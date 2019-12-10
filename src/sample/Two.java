@@ -48,6 +48,9 @@ public class Two {
     @FXML
     private ChoiceBox<String> chBox;
 
+    @FXML
+    private Button help;
+
 
     @FXML
     void initialize() {
@@ -70,6 +73,23 @@ public class Two {
                     }else error();
                 }else error();
             }else error();
+        });
+
+        help.setOnAction(event -> {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/help/app.fxml"));
+
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent parent = loader.getRoot();
+            Stage stage =  new Stage();
+            stage.setTitle("Окно авторизации");
+            stage.setScene(new Scene(parent));
+            stage.show();
         });
 
 

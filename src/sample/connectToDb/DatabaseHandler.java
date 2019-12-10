@@ -2,7 +2,10 @@ package sample.connectToDb;
 
 import sample.connectToDb.Configs;
 import sample.connectToDb.Const;
+import sample.klad.Textile;
+import sample.zakaz.Tovar;
 import sample.zakaz.basketTovar.ZakazTable;
+import sample.zakaz.constructor.Constructor;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,10 +29,11 @@ public class DatabaseHandler extends Configs {
 
     public void reqAddNewZakaz(TovarList tovarList){
         try {
-            String insert = "INSERT INTO zakaz (nameZakaz,numberZakaz) VALUES (?, ?)";
+            String insert = "INSERT INTO zakaz (nameZakaz,numberZakaz,price) VALUES (?, ?,?)";
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1,tovarList.getNameTovar());
             prSt.setInt(2,tovarList.getNumberTovar());
+            prSt.setInt(3,tovarList.getPriceTovar());
             prSt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -49,17 +53,36 @@ public class DatabaseHandler extends Configs {
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
+    }
 
+    public void reqAddNewConstr(Constructor constructor){
+        try {
+            String insert = "INSERT INTO konstructor (widthh, highh, varik, okon, fur,ssize) VALUES (?, ?, ?, ?, ?,?)";
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setInt(1,constructor.getW());
+            prSt.setInt(2,constructor.getH());
+            prSt.setInt(3,constructor.getV());
+            prSt.setInt(4,constructor.getQ());
+            prSt.setInt(5,constructor.getF());
+            prSt.setInt(6,constructor.getS());
+
+            prSt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void reqAddNewTovar(TovarList tovarList){
         try {
-            String insert = "INSERT INTO tovar2 (nameTovar, widthTovar, longTovar, numberTovar) VALUES (?, ?, ?, ?)";
+            String insert = "INSERT INTO tovar2 (nameTovar, widthTovar, longTovar, numberTovar, price) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1,tovarList.getNameTovar());
             prSt.setInt(2,tovarList.getWidthTovar());
             prSt.setInt(3,tovarList.getLongTovar());
-            prSt.setInt(4,tovarList.getLongTovar());
+            prSt.setInt(4,tovarList.getNumberTovar());
+            prSt.setInt(5,tovarList.getPriceTovar());
 
             prSt.executeUpdate();
         }catch (SQLException e){
@@ -82,17 +105,43 @@ public class DatabaseHandler extends Configs {
         }
     }
 
+    public void reqDeleteTextile(Textile textile){
+        try {
+            String delete = "DELETE FROM textile WHERE idtextile =?";
+            PreparedStatement prSt = getDbConnection().prepareStatement(delete);
+            prSt.setInt(1,textile.getId());
+            prSt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
 
 
     public void reqChangeTovar(TovarList tovarList){
         try {
-            String update = "UPDATE tovar2 SET nameTovar =?, widthTovar =?, longTovar =? , numberTovar =? WHERE idtovar2 =?";
+            String update = "UPDATE tovar2 SET widthTovar =?, longTovar =?  WHERE idtovar2 =?";
             PreparedStatement prSt = getDbConnection().prepareStatement(update);
-            prSt.setString(1,tovarList.getNameTovar());
-            prSt.setInt(2,tovarList.getWidthTovar());
-            prSt.setInt(3,tovarList.getLongTovar());
-            prSt.setInt(4,tovarList.getNumberTovar());
-            prSt.setInt(5,tovarList.getIdTovar());
+            prSt.setInt(1,tovarList.getWidthTovar());
+            prSt.setInt(2,tovarList.getLongTovar());
+            prSt.setInt(3,tovarList.getIdTovar());
+            prSt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void reqChangeTextile(Textile textile){
+        try {
+            String update = "UPDATE textile SET  longTextile =? , widtTextile =?  WHERE idtextile =?";
+            PreparedStatement prSt = getDbConnection().prepareStatement(update);
+            prSt.setInt(1,textile.getLonger());
+            prSt.setInt(2,textile.getWidth());
+            prSt.setInt(3,textile.getId());
             prSt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -153,7 +202,37 @@ public class DatabaseHandler extends Configs {
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
+        return resSet;
+    }
+    public ResultSet checkIDfromZakaz(ZakazTable zktable){
+        ResultSet  resSet = null;
+        String select = "SELECT * FROM zakaz WHERE idZakaz =?";
 
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setInt(1,zktable.getIdTable());
+            resSet = prSt.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet checkID(TovarList tovarlist){
+        ResultSet  resSet = null;
+        String select = "SELECT * FROM tovar2 WHERE idtovar2 =?";
+
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setInt(1,tovarlist.getIdTovar());
+            resSet = prSt.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
         return resSet;
     }
     public ResultSet checkZakazCount(TovarList tovar){
@@ -206,9 +285,68 @@ public class DatabaseHandler extends Configs {
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
-
         return resultSet;
     }
 
+    public ResultSet selectCountFromZakaz(ZakazTable zkTable){
+        ResultSet  resSet = null;
+        String select = "SELECT * FROM zakaz WHERE idZakaz =?";
 
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setInt(1,zkTable.getIdTable());
+            resSet = prSt.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet selectCountFromTovar2(TovarList tovarList){
+        ResultSet  resSet = null;
+        String select = "SELECT * FROM tovar2 WHERE nameTovar =?";
+
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1,tovarList.getNameTovar());
+            resSet = prSt.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet selectPriceWhenAdd(TovarList tovarList){
+        ResultSet  resSet = null;
+        String select = "SELECT * FROM tovar2 WHERE nameTovar =?";
+
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1,tovarList.getNameTovar());
+            resSet = prSt.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public void updateAfterDelete(TovarList tovarList){
+        try {
+            String update = "UPDATE tovar2 SET numberTovar =? WHERE idtovar2 =?";
+            PreparedStatement prSt = getDbConnection().prepareStatement(update);
+            prSt.setInt(1,tovarList.getNumberTovar());
+            prSt.setInt(2,tovarList.getIdTovar());
+            prSt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
 }

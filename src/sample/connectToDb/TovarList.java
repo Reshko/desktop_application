@@ -6,16 +6,26 @@ public class TovarList {
     private int widthTovar;
     private int longTovar;
     private int numberTovar;
+    private int priceTovar;
 
-    public TovarList(int idTovar ,String nameTovar, int widthTovar, int longTovar, int numberTovar) {
+    public TovarList(int idTovar ,String nameTovar, int widthTovar, int longTovar, int numberTovar,int priceTovar) {
         this.idTovar = idTovar;
         this.nameTovar = nameTovar;
         this.widthTovar = widthTovar;
         this.longTovar = longTovar;
         this.numberTovar = numberTovar;
+        this.priceTovar = priceTovar;
     }
 
     public TovarList() {}
+
+    public int getPriceTovar() {
+        return priceTovar;
+    }
+
+    public void setPriceTovar(int priceTovar) {
+        this.priceTovar = priceTovar;
+    }
 
     public int getIdTovar() {
         return idTovar;

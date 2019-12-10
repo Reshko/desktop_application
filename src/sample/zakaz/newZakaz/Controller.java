@@ -52,8 +52,8 @@ public class Controller {
                     if(checkCountTovar(nameField.getText().trim(), numberField.getText().trim())){
                         addNewThink();
                         newThink.getScene().getWindow().hide();
-                    }else{ System.out.println("Количество");}
-                }else{ System.out.println("NO FOUND DATA"); }
+                    }else errorCountData();
+                }else errorName();
             }else{ error();}
         });
     }
@@ -62,11 +62,24 @@ public class Controller {
 
         String name = nameField.getText();
         int num = Integer.parseInt(numberField.getText());
+        TovarList tovarList = new TovarList();
+        tovarList.setNameTovar(name);
 
-        TovarList tovar = new TovarList(1,name,1,1,num);
+        ResultSet res = dbHandler.selectPriceWhenAdd(tovarList);
 
-        dbHandler.reqAddNewZakaz(tovar);
+        int price = 2;
 
+        try {
+            while (res.next()){
+                price = res.getInt("price");
+            }
+
+            TovarList tovar = new TovarList(1,name,1,1,num,price);
+            dbHandler.reqAddNewZakaz(tovar);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     static boolean checkCountTovar(String strNameTovar,String countNumberTovar){
@@ -91,7 +104,7 @@ public class Controller {
                     digit++;
                 }else {
                     int shit = countNumber - Integer.parseInt(countNumberTovar);
-                    TovarList tovarList = new TovarList(idCountNumber,"asd",0,0,shit);
+                    TovarList tovarList = new TovarList(idCountNumber,"asd",0,0,shit,0);
                     dbHandler.changeCountWhenNewZakaz(tovarList);
                 }
             }
@@ -116,8 +129,6 @@ public class Controller {
         try {
             while(result.next()){
                 count++;
-                //System.out.println(result);
-
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -141,6 +152,35 @@ public class Controller {
         stage.setTitle("Заполните данные");
         stage.setScene(new Scene(parent));
         stage.showAndWait();
+    }
 
+    void errorCountData(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/error/notFoundCountData.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent parent = loader.getRoot();
+        Stage stage =  new Stage();
+        stage.setTitle("Заполните данные");
+        stage.setScene(new Scene(parent));
+        stage.showAndWait();
+    }
+
+    void errorName(){
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/error/notFoundName.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent parent = loader.getRoot();
+        Stage stage =  new Stage();
+        stage.setTitle("Заполните данные");
+        stage.setScene(new Scene(parent));
+        stage.showAndWait();
     }
 }

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -56,6 +57,9 @@ public class ControllerMenager {
     private TableColumn<Tovar, Integer> numberColumn;
 
     @FXML
+    private TableColumn<Tovar, Integer> priceColumn;
+
+    @FXML
     private Button exitBtn;
 
     @FXML
@@ -67,9 +71,14 @@ public class ControllerMenager {
     @FXML
     private Button addBtn;
 
+    @FXML
+    private Label summ;
+
 
     @FXML
     public void initialize() {
+
+        returnSum();
 
         showTable();
 
@@ -78,6 +87,7 @@ public class ControllerMenager {
         widthColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("width"));
         longColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("longer"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("number"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Tovar,Integer>("price"));
 
         tableUsers.setItems(tovarData);
 
@@ -108,7 +118,7 @@ public class ControllerMenager {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()){
-                tovarData.add(new Tovar(resultSet.getInt("idtovar2"),resultSet.getString("nameTovar"),resultSet.getInt("widthTovar"),resultSet.getInt("longTovar"),resultSet.getInt("numberTovar")));
+                tovarData.add(new Tovar(resultSet.getInt("idtovar2"),resultSet.getString("nameTovar"),resultSet.getInt("widthTovar"),resultSet.getInt("longTovar"),resultSet.getInt("numberTovar"),resultSet.getInt("price")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -188,5 +198,57 @@ public class ControllerMenager {
         stage.setTitle("Запрос на добавление данных");
         stage.setScene(new Scene(parent));
         stage.showAndWait();
+    }
+
+/*    public void returnSum(){
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        String query = "select sum(price) from tovar2";
+
+        String rub = "рублей";
+        try {
+            Statement statement = dbHandler.getDbConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()){
+                rub = resultSet.getString("sum(price)");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        summ.setText(rub + " рублей");
+
+    }*/
+    public void returnSum(){
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        String query = "select * from tovar2";
+
+
+        int count = 0;
+        int price = 0;
+        int itog = 0;
+        int summt = 0;
+        try {
+            Statement statement = dbHandler.getDbConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()){
+                count = resultSet.getInt("numberTovar");
+                price = resultSet.getInt("price");
+                itog = price * count;
+                summt += itog;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        summ.setText(Integer.toString(summt));
+
     }
 }

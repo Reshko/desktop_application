@@ -13,11 +13,16 @@
    <children>
       <AnchorPane prefHeight="115.0" prefWidth="700.0" style="-fx-background-color: #f75959;">
          <children>
-            <Label layoutX="280.0" layoutY="32.0" prefHeight="51.0" prefWidth="140.0" style="-fx-background-color: #f75959;" text="лоликек" textFill="#fafafa">
+            <Label layoutX="280.0" layoutY="32.0" prefHeight="51.0" prefWidth="254.0" style="-fx-background-color: #f75959;" text="Предприятие" textFill="#fafafa">
                <font>
                   <Font size="35.0" />
                </font>
             </Label>
+            <ImageView fitHeight="73.0" fitWidth="84.0" layoutX="192.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/logo-02.jpg" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <TextField fx:id="login" layoutX="234.0" layoutY="169.0" prefHeight="30.0" prefWidth="243.0" promptText="логин">

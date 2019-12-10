@@ -8,7 +8,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="868.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.klad.Controller">
     <children>
-        <AnchorPane prefHeight="61.0" prefWidth="868.0" style="-fx-background-color: #f75959;" />
+        <AnchorPane prefHeight="61.0" prefWidth="868.0" style="-fx-background-color: #f75959;">
+         <children>
+            <Button fx:id="update" layoutX="802.0" layoutY="14.0" mnemonicParsing="false" text="\@" />
+         </children></AnchorPane>
         <!-- Таблица в которую мы будем выводит наш pojo -->
         <TableView fx:id="tableUsers" layoutY="80.0" prefHeight="230.0" prefWidth="868.0">
             <columns>
@@ -21,9 +24,8 @@
             </columns>
         </TableView>
         <Button fx:id="exitBtn" layoutX="763.0" layoutY="641.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="73.0" text="Выйти" />
-      <Button fx:id="deleteBtn" layoutX="254.0" layoutY="641.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Удалить" />
-      <Button fx:id="changeBtn" layoutX="138.0" layoutY="641.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Изменить" />
-      <Button fx:id="addBtn" layoutX="22.0" layoutY="641.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Добавить" />
+      <Button fx:id="deleteBtn" layoutX="147.0" layoutY="641.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Удалить" />
+      <Button fx:id="changeBtn" layoutX="25.0" layoutY="641.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Изменить" />
       <Label layoutX="391.0" layoutY="62.0" text="Список фурнитуры" />
       <TableView fx:id="tableUsers1" layoutY="330.0" prefHeight="302.0" prefWidth="868.0">
          <columns>
