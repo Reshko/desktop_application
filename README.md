@@ -1,3 +1,5 @@
-# tst2
+# Java desktop application
 
-GUI app on JavaFx
+Java 1.8
+JavaFX
+MySql
